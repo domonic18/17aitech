@@ -6,6 +6,7 @@ services:
       - .env  # 引用.env文件
     volumes:
       - ./mysql_data:/var/lib/mysql
+    restart: always
     networks:
       - wordpress_network
 
@@ -15,6 +16,7 @@ services:
     volumes:
       - ./wordpress_data:/var/www/html
       - ./ssl:/etc/apache2/ssl  # 挂载 SSL 证书
+    restart: always
     ports:
       - "80:80"
       - "443:443"
@@ -24,6 +26,8 @@ services:
       APACHE_RUN_USER: www-data
       APACHE_RUN_GROUP: www-data
       APACHE_LOG_DIR: /var/log/apache2
+    env_file:
+      - .env  # 引用.env文件
 
 networks:
   wordpress_network:
