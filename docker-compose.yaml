@@ -10,9 +10,7 @@ services:
       - wordpress_network
 
   wordpress:
-    build:
-      context: .  # 设置为根目录
-      dockerfile: ./apache/Dockerfile  # 指定 Dockerfile 的路径
+    image: wordpress:latest  # 使用官方 WordPress 镜像
     container_name: wp_wordpress
     volumes:
       - ./wordpress_data:/var/www/html
