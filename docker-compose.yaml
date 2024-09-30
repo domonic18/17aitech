@@ -1,0 +1,36 @@
+services:
+  mysql:
+    image: mysql:latest
+    container_name: wp_mysql
+    env_file:
+      - .env  # 引用.env文件
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - wordpress_network
+
+  wordpress:
+    build:
+      context: .  # 设置为根目录
+      dockerfile: ./apache/Dockerfile  # 指定 Dockerfile 的路径
+    container_name: wp_wordpress
+    volumes:
+      - ./wordpress_data:/var/www/html
+      - ./ssl:/etc/apache2/ssl  # 挂载 SSL 证书
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - wordpress_network
+    environment:
+      APACHE_RUN_USER: www-data
+      APACHE_RUN_GROUP: www-data
+      APACHE_LOG_DIR: /var/log/apache2
+
+networks:
+  wordpress_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  wordpress_data:
