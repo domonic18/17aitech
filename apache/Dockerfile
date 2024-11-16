@@ -6,11 +6,14 @@ RUN apt-get update && \
     a2enmod ssl && \
     a2ensite default-ssl
 
-# 复制自定义的 SSL 配置文件
-COPY ./apache/apache-ssl.conf /etc/apache2/sites-available/default-ssl.conf
 
-# 复制 SSL 证书
-COPY ./ssl /etc/apache2/ssl
+# 设置工作目录
+WORKDIR /var/www/html
 
-# 重新启动 Apache
-CMD ["apachectl", "-D", "FOREGROUND"]
+# 复制 Apache 配置文件到容器中（如果有的话）
+COPY apache-ssl.conf /etc/apache2/sites-available/default-ssl.conf
+
+# 暴露端口
+EXPOSE 80
+EXPOSE 443
+
