@@ -11,7 +11,6 @@ services:
       - wordpress_network
 
   wordpress:
-    # image: wordpress:latest  # 使用官方 WordPress 镜像
     build: ./apache  # 使用当前工程目录下的apache目录下的Dockerfile
     container_name: wp_wordpress
     volumes:

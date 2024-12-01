@@ -1,4 +1,4 @@
-FROM wordpress:latest
+FROM wordpress:6.7.0-php8.3-apache
 
 # 启用 Apache SSL 模块
 RUN apt-get update && \
